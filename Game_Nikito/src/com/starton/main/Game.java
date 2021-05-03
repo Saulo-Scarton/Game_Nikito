@@ -18,6 +18,8 @@ import com.starton.entities.Player;
 import com.starton.graphics.Spritesheet;
 import com.starton.world.World;
 
+//Jogo Nikito
+
 public class Game extends Canvas implements Runnable,KeyListener{
 	
 	private static final long serialVersionUID = 1L;
