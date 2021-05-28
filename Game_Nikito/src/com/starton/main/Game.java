@@ -18,8 +18,6 @@ import com.starton.entities.Player;
 import com.starton.graphics.Spritesheet;
 import com.starton.world.World;
 
-//Jogo Nikito
-
 public class Game extends Canvas implements Runnable,KeyListener{
 	
 	private static final long serialVersionUID = 1L;
@@ -161,13 +159,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			player.up = true;
 		}else if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			player.down = true;
-		}
-		
-		//Shift para aumentar a velocidade (correr)
-		if(e.getKeyCode() == KeyEvent.VK_SHIFT) {
-			player.run = true;
-		}
-		
+		}	
 	}
 
 	@Override
@@ -183,12 +175,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		}else if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			player.down = false;
 		}
-		
-		//Shift para aumentar a velocidade (correr)
-		if(e.getKeyCode() == KeyEvent.VK_SHIFT) {
-			player.run = false;
-		}
-		
 	}
 }
 

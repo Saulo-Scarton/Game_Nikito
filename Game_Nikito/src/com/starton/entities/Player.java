@@ -15,7 +15,7 @@ public class Player extends Entity{
 	public boolean right,up,left,down,run;
 	public int right_dir = 0,left_dir = 1;
 	public int dir = right_dir;
-	public double speed = 1;
+	public double speed = 1.4;
 	
 	private int frames = 0,maxFrames = 5,index = 0,maxIndex = 3;
 	private boolean moved = false;
@@ -56,13 +56,7 @@ public class Player extends Entity{
 			moved = true;
 			y+=speed;
 		}
-		
-		if(run) {
-			speed = 2;
-		}else {
-			speed = 1;
-		}
-		
+			
 		if(moved) {
 			frames++;
 			if(frames == maxFrames) {
