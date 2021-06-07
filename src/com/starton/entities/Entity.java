@@ -3,6 +3,7 @@ package com.starton.entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Comparator;
 import java.util.List;
 
 import com.starton.main.Game;
@@ -26,7 +27,7 @@ public class Entity {
 	protected double x,y;
 	protected int width,height;
 	
-
+	public int depth;
 	
 	protected List<Node> path;
 	
@@ -48,6 +49,20 @@ public class Entity {
 		this.mwidth = width;
 		this.mheight = height;
 	}
+	
+	//compara depth das entities
+	public static Comparator<Entity> nodeSorter = new Comparator<Entity>() {
+		
+		@Override
+		
+		public int compare(Entity n0,Entity n1) {
+			if(n1.depth < n0.depth) 
+				return +1;
+			if(n1.depth > n0.depth)
+				return -1;
+			return 0;
+		}
+	};
 	
 	public void setMask(int maskx, int masky, int mwidth, int mheight) {
 		this.maskx = maskx;

@@ -12,18 +12,13 @@ public class Flower extends Entity{
 	
 	private BufferedImage[] sprites;
 	
+	
 	public Flower(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		sprites = new BufferedImage[6];
 		sprites[0] = Game.spritesheet.getSprite(0, 64, 16, 16);
 		sprites[1] = Game.spritesheet.getSprite(32, 64, 16, 16);
 		sprites[2] = Game.spritesheet.getSprite(16, 64, 16, 16);
-		sprites[3] = Game.spritesheet.getSprite(32, 64, 16, 16);
-		sprites[4] = Game.spritesheet.getSprite(48, 64, 16, 16);
-		sprites[5] = Game.spritesheet.getSprite(32, 64, 16, 16);
-	}
-	
-	public void tick() {
 		frames++;
 		if(frames == maxFrames) {
 			frames = 0;

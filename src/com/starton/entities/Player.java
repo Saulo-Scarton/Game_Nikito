@@ -7,9 +7,6 @@ import com.starton.main.Sound;
 import com.starton.world.Camera;
 import com.starton.world.World;
 
-
-
-
 public class Player extends Entity{
 
 	public boolean right,up,left,down,run;
@@ -54,6 +51,7 @@ public class Player extends Entity{
 	}
 	
 	public void tick() {
+		depth = 1;
 		moved = false;
 		if(right && World.isFree((int)(x+speed),this.getY())) {
 			moved = true;

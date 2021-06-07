@@ -2,11 +2,14 @@ package com.starton.main;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -15,8 +18,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +45,8 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
 	public static final int SCALE = 5;
+	
+	public static int minimapSize = 25*SCALE;
 	
 	public static int FPS = 0;
 	
@@ -78,8 +83,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public int[] pixels;
 	public BufferedImage lightmap;
 	public int[] lightmapPixels;
+	public static int[] minimapPixels;
 	
 	public int mx,my;
+	
+	private static BufferedImage miniMap;
 	
 	public Game() {
 		random = new Random();
@@ -109,6 +117,8 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		entities.add(player);
 		world = new World("/level1.png"); //World precisa ser carregado depois do spritesheet
 		
+		miniMap = new BufferedImage(World.WIDTH,World.HEIGHT, BufferedImage.TYPE_INT_RGB);
+		minimapPixels = ((DataBufferInt)miniMap.getRaster().getDataBuffer()).getData(); //manipular pixel da imagem
 		/*
 		try {
 			newFont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(36f);
@@ -127,6 +137,22 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		frame.add(this);
 		frame.setResizable(false);
 		frame.pack();
+		
+		//icone da janela
+		Image image = null;
+		try {
+			image = ImageIO.read(getClass().getResource("/icon.png"));
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		//cursor
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image cursorImage = toolkit.getImage(getClass().getResource("/icon.png"));
+		Cursor c = toolkit.createCustomCursor(cursorImage, new Point(0,0),"img");
+		
+		frame.setCursor(c);
+		frame.setIconImage(image);
+		frame.setAlwaysOnTop(true);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -155,7 +181,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	
 	public void tick() { //toda logica do game fica em tick
 		if(Game.CUR_LEVEL == 3) {
-			Sound.bombastic1.playLoop();
+			//Sound.bombastic1.playLoop();
 		}else {
 		Sound.music.playLoop();
 		}
@@ -229,7 +255,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		for(int xx = 0; xx < Game.WIDTH; xx++) {
 			for(int yy = 0; yy < Game.HEIGHT; yy++) {
 				if(lightmapPixels[xx+(yy* Game.WIDTH)] == 0xffffffff) {
-					pixels[xx+(yy*Game.WIDTH)] =0;
+					//pixels[xx+(yy*Game.WIDTH)] =0;
 				}
 			}
 		}
@@ -248,6 +274,8 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 
 		
 		world.render(g); //renderizar mundo
+		
+		Collections.sort(entities, Entity.nodeSorter);
 		
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
@@ -269,10 +297,10 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		//mostrar FPS
 		g.setFont(new Font("arial",Font.BOLD,20));
 		g.setColor(Color.black);
-		g.drawString("FPS: " + FPS, (WIDTH*SCALE)+3 - 85, (HEIGHT*SCALE)-7);
+		g.drawString("FPS: " + FPS, (WIDTH*SCALE)+3 - 85, (HEIGHT*SCALE)-minimapSize-8);
 		g.setFont(new Font("arial",Font.BOLD,20));
 		g.setColor(Color.white);
-		g.drawString("FPS: " + FPS, (WIDTH*SCALE) - 85, (HEIGHT*SCALE)-5);
+		g.drawString("FPS: " + FPS, (WIDTH*SCALE) - 85, (HEIGHT*SCALE)-minimapSize-6);
 		
 		//mostrar qtd ammo
 		g.setFont(new Font("arial",Font.BOLD,20));
@@ -314,7 +342,8 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		g.setColor(Color.orange);
 		g.fillRect(200, 200, 50, 50);
 		*/
-		
+		World.renderMiniMap();
+		g.drawImage(miniMap,WIDTH*SCALE-minimapSize-5,HEIGHT*SCALE-minimapSize-5,minimapSize,minimapSize,null);
 		bs.show();
 	}
 

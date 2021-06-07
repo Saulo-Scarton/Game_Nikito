@@ -9,11 +9,10 @@ import com.starton.main.Sound;
 import com.starton.world.AStar;
 import com.starton.world.Camera;
 import com.starton.world.Vector2i;
-import com.starton.world.World;
 
 public class Enemy extends Entity{
 	
-	private double speed = 0.1;
+	//private double speed = 0.1;
 	
 	private int frames = 0,maxFrames = 17 /*max frames para reduzir a velocidade da animação do inimigo*/,index = 0,maxIndex = 1;
 	
@@ -65,6 +64,7 @@ public class Enemy extends Entity{
 		masky = 5;
 		mwidth = 7;
 		mheight = 11;
+		depth = 0;
 		if(!isColiddingWithPlayer()) {
 			if(path == null || path.size() == 0) {
 				Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
@@ -74,7 +74,7 @@ public class Enemy extends Entity{
 		}else{
 			//está colidindo com player
 			if(Game.random.nextInt(100) < 5) {
-				Game.player.Life--;
+				//Game.player.Life--;
 				Game.player.isDamaged = true;
 			}
 		}

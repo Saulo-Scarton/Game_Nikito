@@ -156,4 +156,21 @@ public class World {
 		}
 	}
 	
+	public static void renderMiniMap() {
+		for(int i = 0; i < Game.minimapPixels.length; i++) {
+			Game.minimapPixels[i] = 0;
+		}
+		for(int xx = 0; xx < WIDTH; xx++) {
+			for(int yy = 0; yy < HEIGHT; yy++) {
+				if(tiles[xx + (yy*WIDTH)] instanceof WallTile) {
+					Game.minimapPixels[xx + (yy*WIDTH)] = 0xecf0f1;
+				}
+			}
+		}
+		
+		int xPlayer = Game.player.getX()/16;
+		int yPlayer = Game.player.getY()/16;
+		Game.minimapPixels[xPlayer + (yPlayer*WIDTH)] = 0x3498db;
+	}
+	
 }
