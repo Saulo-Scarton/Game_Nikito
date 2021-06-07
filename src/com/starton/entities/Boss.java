@@ -6,14 +6,15 @@ import java.awt.image.BufferedImage;
 
 import com.starton.main.Game;
 import com.starton.main.Sound;
+import com.starton.world.AStar;
 import com.starton.world.Camera;
-import com.starton.world.World;
+import com.starton.world.Vector2i;
 
 public class Boss extends Entity{
 
-	private double speed = 1;
+	//private double speed = 1;
 
-	private int maskx = 6, masky = 3, maskw = 20, maskh = 29; //tamanho da mascara
+	private int baskx, basky, bwidth, bheight; //tamanho da mascara
 	
 	private int frames = 0,maxFrames = 10 /*max frames para reduzir a velocidade da animação do inimigo*/,index = 0,maxIndex = 3;
 	
@@ -37,23 +38,46 @@ public class Boss extends Entity{
 	public void tick() {
 		//colidindo com player, ajustar getX e getY para "mirar" no meio do player quando perseguir 
 		//tambem ajustar o speed para colisões com as TILES (paredes)
+		/*
 		if(isColiddingWithPlayer() == false) { 
-			if((int)x < Game.player.getX()-10 && World.isFree((int)(x+speed+10) /*ajustar colisão com parede a direita*/, this.getY()) && !isColiding((int)(x+speed), this.getY())) {
+			if((int)x < Game.player.getX()-10 && World.isFree((int)(x+speed+10), this.getY()) && !isColiding((int)(x+speed), this.getY())) {
 				x+=speed;
-			}else if((int)x > Game.player.getX()-10 && World.isFree((int)(x-speed) /*ajustar colisão com parede a esquerda*/, this.getY()) && !isColiding((int)(x-speed), this.getY())) {
+			}else if((int)x > Game.player.getX()-10 && World.isFree((int)(x-speed), this.getY()) && !isColiding((int)(x-speed), this.getY())) {
 				x-=speed;
 			}
-			if((int)y < Game.player.getY()-10 && World.isFree(this.getX(), (int)(y+speed+16) /*ajustar colisão com parede baixo*/) && !isColiding(this.getX(), (int)(y+speed))) {
+			if((int)y < Game.player.getY()-10 && World.isFree(this.getX(), (int)(y+speed+16)) && !isColiding(this.getX(), (int)(y+speed))) {
 				y+=speed;
-			}else if((int)y > Game.player.getY()-10 && World.isFree(this.getX(), (int)(y-speed) /*ajustar colisão com parede cima*/) && !isColiding(this.getX(), (int)(y-speed))) {
+			}else if((int)y > Game.player.getY()-10 && World.isFree(this.getX(), (int)(y-speed)) && !isColiding(this.getX(), (int)(y-speed))) {
 				y-=speed;
 			}
-		}else {
+		}
+		*/
+		//A STAR
+		baskx = 6;
+		basky = 3;
+		bwidth = 20;
+		bheight = 29;
+		depth = 0;
+		if(!isColiddingWithPlayer()) {
+			if(path == null || path.size() == 0) {
+				Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
+				Vector2i end = new Vector2i((int)(Game.player.x/16),(int)(Game.player.y/16));
+				path = AStar.findPath(Game.world, start, end);
+			}
+		}else{
 			//está colidindo com player
 			if(Game.random.nextInt(100) < 5) {
-				//Game.player.Life-= 20;
-				//Game.player.isDamaged = true;
+				//Game.player.Life--;
+				Game.player.isDamaged = true;
 			}
+		}
+		if(Game.random.nextInt(100) < 0) {
+			followPath(path);
+		}
+		if(Game.random.nextInt(100) < 0) {
+			Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
+			Vector2i end = new Vector2i((int)(Game.player.x/16),(int)(Game.player.y/16));
+			path = AStar.findPath(Game.world, start, end);
 		}
 		
 		frames++;
@@ -104,19 +128,19 @@ public class Boss extends Entity{
 
 	
 	public boolean isColiddingWithPlayer() { //testa colisão do inimigo com o player
-		Rectangle enemyCurrent = new Rectangle(this.getX() + maskx,this.getY() + masky,maskw,maskh);
+		Rectangle enemyCurrent = new Rectangle(this.getX() + baskx,this.getY() + basky,bwidth,bheight);
 		Rectangle player = new Rectangle(Game.player.getX(),Game.player.getY(),14,16);
 		
 		return enemyCurrent.intersects(player);
 	}
 	
 	public boolean isColiding(int xnext,int ynext) { //testando colisões de inimigos
-		Rectangle enemyCurrent = new Rectangle(xnext + maskx,ynext + masky,maskw,maskh);
+		Rectangle enemyCurrent = new Rectangle(xnext + baskx,ynext + basky,bwidth,bheight);
 		for(int i = 0; i < Game.boss1.size(); i++) {
 			Boss e = Game.boss1.get(i);
 			if(e == this)
 				continue;
-			Rectangle targetEnemy = new Rectangle(e.getX() + maskx,e.getY() + masky,maskw,maskh);
+			Rectangle targetEnemy = new Rectangle(e.getX() + baskx,e.getY() + basky,bwidth,bheight);
 			if(enemyCurrent.intersects(targetEnemy)) {
 				return true;
 			}
@@ -130,7 +154,7 @@ public class Boss extends Entity{
 			g.drawImage(sprites[index], this.getX() - Camera.x,this.getY() - Camera.y,null);
 		else
 			g.drawImage(Entity.BOSS1_DAMAGED, this.getX() - Camera.x,this.getY() - Camera.y,null);
-			//g.fillRect(this.getX() + maskx - Camera.x , this.getY() + masky - Camera.y ,maskw, maskh); //para ver a posição da mascara
+			g.fillRect(this.getX() + baskx - Camera.x , this.getY() + basky - Camera.y ,bwidth,bheight); //para ver a posição da mascara
 	}
 
 }

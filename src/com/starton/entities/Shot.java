@@ -40,7 +40,7 @@ public class Shot extends Entity{
 	public void colidingShot() { //está colidindo com wall
 		for(int i = 0; i < Game.shot.size(); i++) {
 			Entity e = Game.shot.get(i);
-			if(e instanceof LifePack) {
+			if(e instanceof Shot) {
 				if(Entity.isColidding(this,e)) {
 					Game.shot.remove(i);
 					return;

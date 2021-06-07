@@ -2,6 +2,8 @@ package com.starton.entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.TimeUnit;
+
 import com.starton.main.Game;
 import com.starton.main.Sound;
 import com.starton.world.Camera;
@@ -30,7 +32,7 @@ public class Player extends Entity{
 	private int damageFrames = 0; //deve criar para após o player sofrer dano voltar a sprite normal
 	
 	public boolean shoot, mouseShoot = false;
-	
+	public int Stamina = 100, maxStamina = 100;  
 	public int Life = 100,maxLife=100; //não pode ser static pois quando reinicia o jogo (GAME OVER) a vida deve voltar a ser 100,
 	public double mx,my; //posição do mouse
 	
@@ -71,10 +73,18 @@ public class Player extends Entity{
 			y+=speed;
 		}
 		
-		if(run) {
+		if(run && Stamina > 0) {
 			speed = 2;
+			Stamina--;
+			if(Stamina <= 0){
+				Stamina = -100; //obriga aguardar um tempo para recuperar após Stamina chegar em 0
+			}
 		}else {
+			if(Stamina >= 100) {
+				Stamina = 100;
+			}
 			speed = 1;
+			Stamina++;
 		}
 		
 		if(moved) {

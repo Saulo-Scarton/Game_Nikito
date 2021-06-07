@@ -44,13 +44,13 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	private boolean isRunning = true;
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
-	public static final int SCALE = 5;
+	public static final int SCALE = 4;
 	
 	public static int minimapSize = 25*SCALE;
 	
 	public static int FPS = 0;
 	
-	public static int CUR_LEVEL = 1,MAX_LEVEL = 3; //quantidade de "fases"
+	public static int CUR_LEVEL = 3,MAX_LEVEL = 3; //quantidade de "fases"
 	private BufferedImage image;
 	
 	public static List<Entity> entities;
@@ -115,7 +115,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		spritesheet = new Spritesheet("/spritesheet.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(32, 0, 16, 16));
 		entities.add(player);
-		world = new World("/level1.png"); //World precisa ser carregado depois do spritesheet
+		world = new World("/level"+CUR_LEVEL+".png"); //World precisa ser carregado depois do spritesheet
 		
 		miniMap = new BufferedImage(World.WIDTH,World.HEIGHT, BufferedImage.TYPE_INT_RGB);
 		minimapPixels = ((DataBufferInt)miniMap.getRaster().getDataBuffer()).getData(); //manipular pixel da imagem
@@ -180,11 +180,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	}
 	
 	public void tick() { //toda logica do game fica em tick
-		if(Game.CUR_LEVEL == 3) {
-			//Sound.bombastic1.playLoop();
-		}else {
 		Sound.music.playLoop();
-		}
 		if(gameState == "NORMAL") {
 			if(this.saveGame) {
 				this.saveGame = false;
