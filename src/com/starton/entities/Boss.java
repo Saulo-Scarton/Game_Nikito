@@ -12,10 +12,7 @@ import com.starton.world.Vector2i;
 
 public class Boss extends Entity{
 
-	//private double speed = 1;
-
-	private int baskx, basky, bwidth, bheight; //tamanho da mascara
-	
+	//private double speed = 1;	
 	private int frames = 0,maxFrames = 10 /*max frames para reduzir a velocidade da animação do inimigo*/,index = 0,maxIndex = 3;
 	
 	private BufferedImage[] sprites;
@@ -53,10 +50,10 @@ public class Boss extends Entity{
 		}
 		*/
 		//A STAR
-		baskx = 6;
-		basky = 3;
-		bwidth = 20;
-		bheight = 29;
+		maskx = 6;
+		masky = 3;
+		mwidth = 20;
+		mheight = 29;
 		depth = 0;
 		if(!isColiddingWithPlayer()) {
 			if(path == null || path.size() == 0) {
@@ -128,19 +125,18 @@ public class Boss extends Entity{
 
 	
 	public boolean isColiddingWithPlayer() { //testa colisão do inimigo com o player
-		Rectangle enemyCurrent = new Rectangle(this.getX() + baskx,this.getY() + basky,bwidth,bheight);
+		Rectangle enemyCurrent = new Rectangle(this.getX() + maskx,this.getY() + masky,mwidth,mheight);
 		Rectangle player = new Rectangle(Game.player.getX(),Game.player.getY(),14,16);
-		
 		return enemyCurrent.intersects(player);
 	}
 	
 	public boolean isColiding(int xnext,int ynext) { //testando colisões de inimigos
-		Rectangle enemyCurrent = new Rectangle(xnext + baskx,ynext + basky,bwidth,bheight);
+		Rectangle enemyCurrent = new Rectangle(xnext + maskx,ynext + masky,mwidth,mheight);
 		for(int i = 0; i < Game.boss1.size(); i++) {
 			Boss e = Game.boss1.get(i);
 			if(e == this)
 				continue;
-			Rectangle targetEnemy = new Rectangle(e.getX() + baskx,e.getY() + basky,bwidth,bheight);
+			Rectangle targetEnemy = new Rectangle(e.getX() + maskx,e.getY() + masky,mwidth,mheight);
 			if(enemyCurrent.intersects(targetEnemy)) {
 				return true;
 			}
@@ -154,7 +150,7 @@ public class Boss extends Entity{
 			g.drawImage(sprites[index], this.getX() - Camera.x,this.getY() - Camera.y,null);
 		else
 			g.drawImage(Entity.BOSS1_DAMAGED, this.getX() - Camera.x,this.getY() - Camera.y,null);
-			g.fillRect(this.getX() + baskx - Camera.x , this.getY() + basky - Camera.y ,bwidth,bheight); //para ver a posição da mascara
+			//g.fillRect(this.getX() + maskx - Camera.x , this.getY() + masky - Camera.y ,mwidth,mheight); //para ver a posição da mascara
 	}
 
 }

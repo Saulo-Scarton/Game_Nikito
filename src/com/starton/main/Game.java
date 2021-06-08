@@ -44,7 +44,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	private boolean isRunning = true;
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
-	public static final int SCALE = 4;
+	public static final int SCALE = 5;
 	
 	public static int minimapSize = 25*SCALE;
 	
@@ -248,10 +248,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	*/
 	
 	public void applyLight() {
-		for(int xx = 0; xx < Game.WIDTH; xx++) {
-			for(int yy = 0; yy < Game.HEIGHT; yy++) {
-				if(lightmapPixels[xx+(yy* Game.WIDTH)] == 0xffffffff) {
-					//pixels[xx+(yy*Game.WIDTH)] =0;
+		for(int xx = 0; xx < WIDTH; xx++) {
+			for(int yy = 0; yy < HEIGHT; yy++) {
+				if(lightmapPixels[xx+yy* WIDTH] == 0xff000000) {
+					int pixel = Pixel.getLightBlend(pixels[xx+yy*WIDTH], 0xFF808080, 0);
+					pixels[xx+yy*WIDTH] = pixel;
 				}
 			}
 		}
