@@ -24,7 +24,7 @@ public class Entity {
 	public static BufferedImage BOSS1_DAMAGED = Game.spritesheet.getSprite(128, 32, 32, 32);
 	public static BufferedImage FLOWER_EN = Game.spritesheet.getSprite(0, 64, 16, 16);
 	
-	protected double x,y;
+	public double x,y;
 	protected int width,height;
 	
 	public int depth;

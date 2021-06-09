@@ -44,7 +44,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	private boolean isRunning = true;
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
-	public static final int SCALE = 5;
+	public static final int SCALE = 4;
 	
 	public static int minimapSize = 25*SCALE;
 	
@@ -79,6 +79,12 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static boolean restartGame = false;
 	public boolean saveGame = false;
 	public Menu menu;
+	
+	//Sistema de CUTSCENE
+	public static int scene_entrance1 = 1;
+	public static int begin = 2;
+	public static int playing = 3;
+	public static int scene_state = scene_entrance1;
 	
 	public int[] pixels;
 	public BufferedImage lightmap;
@@ -190,14 +196,20 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 				System.out.println("Jogo foi salvo com sucesso!");
 			}
 			Game.restartGame = false; //para prevenir que o usuario aperte ENTER e reinicie o jogo
-			for(int i = 0; i < entities.size(); i++) {
-				Entity e = entities.get(i);
-				e.tick();
-			}
 			
-			for(int i = 0; i < shot.size(); i++) {
-				shot.get(i).tick();
+			if(scene_state == playing) {
+				for(int i = 0; i < entities.size(); i++) {
+					Entity e = entities.get(i);
+					e.tick();
+				}
+				
+				for(int i = 0; i < shot.size(); i++) {
+					shot.get(i).tick();
+				}
+			}else {
+				
 			}
+
 			
 			if(enemies.size() == 0 && boss1.size() == 0) {//se todos inimigos forem eliminados
 				//próximo level
