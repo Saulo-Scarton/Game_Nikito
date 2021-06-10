@@ -44,11 +44,13 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	private boolean isRunning = true;
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
-	public static final int SCALE = 5;
+	public static final int SCALE = 4;
 	
 	public static int minimapSize = 25*SCALE;
 	
 	public static int FPS = 0;
+	
+	private boolean scenes = false;
 	
 	public static int CUR_LEVEL = 3,MAX_LEVEL = 3; //quantidade de "fases"
 	private BufferedImage image;
@@ -84,9 +86,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static int entrance1 = 1;
 	public static int begin = 2;
 	public static int playing = 3;
+	public static int finish = 4;
 	public static int scene_state = entrance1;
 	public int sceneTime = 0, maxSceneTime = 60*5;
 	private int countDown = 0;
+	private int opac = 255;
 	
 	public int[] pixels;
 	public BufferedImage lightmap;
@@ -200,7 +204,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			Game.restartGame = false; //para prevenir que o usuario aperte ENTER e reinicie o jogo
 			
 			//cutscene
-			if(scene_state == playing) {
+			if(scene_state == playing || !scenes) {
 				for(int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
 					e.tick();
@@ -209,32 +213,41 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 				for(int i = 0; i < shot.size(); i++) {
 					shot.get(i).tick();
 				}
-			}else {
-				if(scene_state == entrance1) {
-					if(player.getX() < 100) {
-						player.x+=0.5;
-					}else {
-						scene_state = begin;
-					}
-				}else if(scene_state == begin) {
-					sceneTime++;
-					if(sceneTime == maxSceneTime) {
-						sceneTime = 0;
-						scene_state = playing;
-					}
+			}else if(scene_state == entrance1 ) {
+				if(player.getX() < 30) {
+					player.x+=0.1;
+				}else {
+					scene_state = begin;
+				}
+			}else if(scene_state == finish) {
+				sceneTime++;
+				if(sceneTime == maxSceneTime) {
+					sceneTime = 0;
+					scene_state = playing;
+				}
+			}else if(scene_state == begin) {
+				sceneTime++;
+				if(sceneTime == maxSceneTime) {
+					sceneTime = 0;
+					scene_state = playing;
 				}
 			}
-
 			
 			if(enemies.size() == 0 && boss1.size() == 0) {//se todos inimigos forem eliminados
 				//próximo level
-				CUR_LEVEL++;
 				scene_state = entrance1;
+				
+				CUR_LEVEL++;
 				if(CUR_LEVEL > MAX_LEVEL) {
 					CUR_LEVEL = 1;
+					player.updateCamera();
+					menu.tick();
 				}
+				
 				String newWorld = "level" + CUR_LEVEL + ".png";
 				World.restartGame(newWorld);
+				player.updateCamera();
+				menu.tick();
 			}
 		}else if(gameState == "GAME_OVER") {
 			//faz piscar a mensagem "pressione enter para continuar"
@@ -371,12 +384,17 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		g.drawImage(miniMap,WIDTH*SCALE-minimapSize-5,HEIGHT*SCALE-minimapSize-5,minimapSize,minimapSize,null);
 		
 		//Contagem para começar o estagio
-		if(scene_state == entrance1) {
-			g.setColor(new Color(0,0,0,100));
+		if(scene_state == entrance1 && gameState != "MENU" && scenes) {
+		
+			g.setColor(new Color(0,0,0,opac));
 			g.fillRect(0,0,Game.WIDTH*Game.SCALE,Game.HEIGHT*Game.SCALE);
+			if(opac > 50) {
+				opac--;
+			}
 		}else if(scene_state == begin) {
 			g.setColor(new Color(0,0,0,50));
 			g.fillRect(0,0,Game.WIDTH*Game.SCALE,Game.HEIGHT*Game.SCALE);
+
 			g.setFont(new Font("arial",Font.BOLD,320));
 			g.setColor(Color.white);
 			if(sceneTime >= 240) {
@@ -402,8 +420,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 				if(countDown == 0) {
 					countDown++;
 					Sound.playerShot.playOnce();
+					opac = 255;
 				}
 			}
+		}else if(scene_state == finish) {
+			g.drawString("NEXT STAGE!",(WIDTH*SCALE)/2 - 300, (HEIGHT*SCALE)/2+ 100);
 		}
 		bs.show();
 	}

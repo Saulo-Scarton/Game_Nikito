@@ -230,6 +230,16 @@ public class Player extends Entity{
 					//Desenhar arma dir
 					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x + 6, this.getY() - Camera.y, null);
 				}
+				if(!run) {
+					for(int i = 0; i < 5; i++) {
+						
+					}
+					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x -5, this.getY() - Camera.y + 4, null);
+					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x -7, this.getY() - Camera.y + 3, null);
+					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x -9, this.getY() - Camera.y + 2, null);
+					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x -11, this.getY() - Camera.y + 1, null);
+				}
+				
 			}else if(dir == left_dir) {
 				g.drawImage(leftPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 				if(hasWeapon) {

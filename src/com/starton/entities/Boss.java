@@ -17,7 +17,7 @@ public class Boss extends Entity{
 	
 	private BufferedImage[] sprites;
 	
-	private int life = 100;
+	private int life = 10;
 	
 	private boolean isDamaged = false;
 	private int damageFrames = 20, damageCurrent = 0;
