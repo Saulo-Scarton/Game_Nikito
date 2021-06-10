@@ -78,10 +78,10 @@ public class Enemy extends Entity{
 				Game.player.isDamaged = true;
 			}
 		}
-		if(Game.random.nextInt(100) < 100) {
+		if(Game.random.nextInt(100) < 0) {
 			followPath(path);
 		}
-		if(Game.random.nextInt(100) < 100) {
+		if(Game.random.nextInt(100) < 0) {
 			Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
 			Vector2i end = new Vector2i((int)(Game.player.x/16),(int)(Game.player.y/16));
 			path = AStar.findPath(Game.world, start, end);

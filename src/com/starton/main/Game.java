@@ -44,7 +44,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	private boolean isRunning = true;
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
-	public static final int SCALE = 4;
+	public static final int SCALE = 5;
 	
 	public static int minimapSize = 25*SCALE;
 	
@@ -81,10 +81,12 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public Menu menu;
 	
 	//Sistema de CUTSCENE
-	public static int scene_entrance1 = 1;
+	public static int entrance1 = 1;
 	public static int begin = 2;
 	public static int playing = 3;
-	public static int scene_state = scene_entrance1;
+	public static int scene_state = entrance1;
+	public int sceneTime = 0, maxSceneTime = 60*5;
+	private int countDown = 0;
 	
 	public int[] pixels;
 	public BufferedImage lightmap;
@@ -197,6 +199,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			}
 			Game.restartGame = false; //para prevenir que o usuario aperte ENTER e reinicie o jogo
 			
+			//cutscene
 			if(scene_state == playing) {
 				for(int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
@@ -207,13 +210,26 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 					shot.get(i).tick();
 				}
 			}else {
-				
+				if(scene_state == entrance1) {
+					if(player.getX() < 100) {
+						player.x+=0.5;
+					}else {
+						scene_state = begin;
+					}
+				}else if(scene_state == begin) {
+					sceneTime++;
+					if(sceneTime == maxSceneTime) {
+						sceneTime = 0;
+						scene_state = playing;
+					}
+				}
 			}
 
 			
 			if(enemies.size() == 0 && boss1.size() == 0) {//se todos inimigos forem eliminados
 				//próximo level
 				CUR_LEVEL++;
+				scene_state = entrance1;
 				if(CUR_LEVEL > MAX_LEVEL) {
 					CUR_LEVEL = 1;
 				}
@@ -294,7 +310,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			shot.get(i).render(g);
 		}
 		
-		applyLight();
+		//applyLight();
 		ui.render(g);
 		/***/
 		g.dispose();
@@ -353,6 +369,42 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		*/
 		World.renderMiniMap();
 		g.drawImage(miniMap,WIDTH*SCALE-minimapSize-5,HEIGHT*SCALE-minimapSize-5,minimapSize,minimapSize,null);
+		
+		//Contagem para começar o estagio
+		if(scene_state == entrance1) {
+			g.setColor(new Color(0,0,0,100));
+			g.fillRect(0,0,Game.WIDTH*Game.SCALE,Game.HEIGHT*Game.SCALE);
+		}else if(scene_state == begin) {
+			g.setColor(new Color(0,0,0,50));
+			g.fillRect(0,0,Game.WIDTH*Game.SCALE,Game.HEIGHT*Game.SCALE);
+			g.setFont(new Font("arial",Font.BOLD,320));
+			g.setColor(Color.white);
+			if(sceneTime >= 240) {
+				g.drawString("GO!",(WIDTH*SCALE)/2 - 300, (HEIGHT*SCALE)/2+ 100);
+				if(countDown == 3) {
+					countDown=0;
+					Sound.playerShot.playOnce();
+				}
+			}else if(sceneTime >= 180) {
+				g.drawString("1",(WIDTH*SCALE)/2 - 100, (HEIGHT*SCALE)/2+ 100);
+				if(countDown == 2) {
+					countDown++;
+					Sound.playerShot.playOnce();
+				}
+			}else if(sceneTime >= 120) {
+				g.drawString("2",(WIDTH*SCALE)/2 - 100, (HEIGHT*SCALE)/2+ 100);
+				if(countDown == 1) {
+					countDown++;
+					Sound.playerShot.playOnce();
+				}
+			}else if(sceneTime >= 60) {
+				g.drawString("3",(WIDTH*SCALE)/2 - 100, (HEIGHT*SCALE)/2+ 100);
+				if(countDown == 0) {
+					countDown++;
+					Sound.playerShot.playOnce();
+				}
+			}
+		}
 		bs.show();
 	}
 

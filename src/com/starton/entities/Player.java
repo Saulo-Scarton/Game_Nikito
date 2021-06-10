@@ -15,9 +15,11 @@ public class Player extends Entity{
 	public int right_dir = 0,left_dir = 1;
 	public int dir = right_dir;
 	public double speed = 1;
+	public static int playerFatigue = 0, playerMaxFatigue = 60*2;
+	
 	
 	private int frames = 0,maxFrames = 5,index = 0,maxIndex = 3;
-	private boolean moved = false;
+	public boolean moved = false;
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
 	
@@ -76,15 +78,17 @@ public class Player extends Entity{
 		if(run && Stamina > 0) {
 			speed = 2;
 			Stamina--;
-			if(Stamina <= 0){
-				Stamina = -100; //obriga aguardar um tempo para recuperar após Stamina chegar em 0
-			}
-		}else {
+			playerFatigue = 0;
+		}else{
 			if(Stamina >= 100) {
 				Stamina = 100;
 			}
 			speed = 1;
-			Stamina++;
+			if(playerFatigue != playerMaxFatigue){
+				playerFatigue++;
+			}else {
+				Stamina++;
+			}
 		}
 		
 		if(moved) {
