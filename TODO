@@ -1,7 +1,7 @@
 () Entrada
 	(x) player andar devagar como se estivesse entrando no lvl
 	(x) camera acompanhar quando trocar de lvl
-	() contagem regressiva 3 2 1 go com som
+	(x) contagem regressiva 3 2 1 go com som
 		() colocar som diferente
 	(x) diminuir opacidade para clarear enquanto o player entra no lvl
 	() player ficar acima do fundo preto
@@ -12,6 +12,7 @@
 	() player ser a seta para escolher
 	() animação quando escolher
 	
-() quando correr levantar poeira
+(x) quando correr levantar poeira
+() quando correr sair som
 () monstros droparem munição
 () chefe com skill

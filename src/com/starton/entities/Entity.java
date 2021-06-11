@@ -23,6 +23,8 @@ public class Entity {
 	public static BufferedImage BOSS1_EN = Game.spritesheet.getSprite(0, 32, 32, 32);
 	public static BufferedImage BOSS1_DAMAGED = Game.spritesheet.getSprite(128, 32, 32, 32);
 	public static BufferedImage FLOWER_EN = Game.spritesheet.getSprite(0, 64, 16, 16);
+	public static BufferedImage RUNDIRT_EN = Game.spritesheet.getSprite(16, 16, 3, 3);
+	
 	
 	public double x,y;
 	protected int width,height;

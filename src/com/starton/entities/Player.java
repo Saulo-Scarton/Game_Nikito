@@ -25,6 +25,8 @@ public class Player extends Entity{
 	
 	private BufferedImage playerDamage;
 	
+	private int time1 = 0, maxTime1 = 12;
+	
 	private boolean hasWeapon = false;
 	
 	public int Ammo = 0;
@@ -55,6 +57,10 @@ public class Player extends Entity{
 	}
 	
 	public void tick() {
+		if(Game.DEBUG) {
+			Stamina = 100;
+		}
+		
 		depth = 1;
 		moved = false;
 		if(right && World.isFree((int)(x+speed),this.getY())) {
@@ -75,7 +81,7 @@ public class Player extends Entity{
 			y+=speed;
 		}
 		
-		if(run && Stamina > 0) {
+		if(moved && run && Stamina > 0) {
 			speed = 2;
 			Stamina--;
 			playerFatigue = 0;
@@ -230,21 +236,61 @@ public class Player extends Entity{
 					//Desenhar arma dir
 					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x + 6, this.getY() - Camera.y, null);
 				}
-				if(!run) {
-					for(int i = 0; i < 5; i++) {
-						
+				if(run && moved) {
+					if(time1 > 10) {
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 5, this.getY() - Camera.y + 14, null);
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 2, this.getY() - Camera.y + 13, null);
+					}else if(time1 > 6) {
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 6, this.getY() - Camera.y + 13, null);
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 3, this.getY() - Camera.y + 14, null);
+					}else if(time1 > 4) {
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 7, this.getY() - Camera.y + 14, null);
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 4, this.getY() - Camera.y + 13, null);
+					}else if(time1 > 2) {
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x +8, this.getY() - Camera.y + 13, null);
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 5, this.getY() - Camera.y + 14, null);
 					}
-					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x -5, this.getY() - Camera.y + 4, null);
-					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x -7, this.getY() - Camera.y + 3, null);
-					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x -9, this.getY() - Camera.y + 2, null);
-					g.drawImage(Entity.SLINGSHOT_RIGHT, this.getX() - Camera.x -11, this.getY() - Camera.y + 1, null);
+					time1++;
+					if(time1 == maxTime1) {
+						time1 = 0;
+					}
+					
+					
 				}
+					
+					//System.out.println(time1);
+					//g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x, this.getY() - Camera.y + 10, null);
+					//g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x -3, this.getY() - Camera.y + 8, null);
+					//g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x -6, this.getY() - Camera.y + 10, null);
+					//g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x -9, this.getY() - Camera.y + 8, null);
+				
 				
 			}else if(dir == left_dir) {
 				g.drawImage(leftPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 				if(hasWeapon) {
 					//Desenhar arma esq
 					g.drawImage(Entity.SLINGSHOT_LEFT, this.getX() - Camera.x - 6, this.getY() - Camera.y, null);
+				}
+				if(run && moved) {
+					if(time1 > 10) {
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 11, this.getY() - Camera.y + 14, null);
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 8, this.getY() - Camera.y + 13, null);
+					}else if(time1 > 6) {
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 10, this.getY() - Camera.y + 13, null);
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 7, this.getY() - Camera.y + 14, null);
+					}else if(time1 > 4) {
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 9, this.getY() - Camera.y + 14, null);
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 6, this.getY() - Camera.y + 13, null);
+					}else if(time1 > 2) {
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x +8, this.getY() - Camera.y + 13, null);
+						g.drawImage(Entity.RUNDIRT_EN, this.getX() - Camera.x + 5, this.getY() - Camera.y + 14, null);
+					}
+					time1++;
+					if(time1 == maxTime1) {
+						time1 = 0;
+					}
+					
+					
 				}
 			}
 		}else {

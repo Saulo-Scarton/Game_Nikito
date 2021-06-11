@@ -44,13 +44,13 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	private boolean isRunning = true;
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
-	public static final int SCALE = 4;
+	public static final int SCALE = 5;
 	
 	public static int minimapSize = 25*SCALE;
 	
 	public static int FPS = 0;
 	
-	private boolean scenes = false;
+	public static boolean DEBUG = true;
 	
 	public static int CUR_LEVEL = 3,MAX_LEVEL = 3; //quantidade de "fases"
 	private BufferedImage image;
@@ -204,7 +204,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			Game.restartGame = false; //para prevenir que o usuario aperte ENTER e reinicie o jogo
 			
 			//cutscene
-			if(scene_state == playing || !scenes) {
+			if(scene_state == playing || DEBUG) {
 				for(int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
 					e.tick();
@@ -384,7 +384,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		g.drawImage(miniMap,WIDTH*SCALE-minimapSize-5,HEIGHT*SCALE-minimapSize-5,minimapSize,minimapSize,null);
 		
 		//Contagem para começar o estagio
-		if(scene_state == entrance1 && gameState != "MENU" && scenes) {
+		if(scene_state == entrance1 && gameState != "MENU" && !DEBUG) {
 		
 			g.setColor(new Color(0,0,0,opac));
 			g.fillRect(0,0,Game.WIDTH*Game.SCALE,Game.HEIGHT*Game.SCALE);
