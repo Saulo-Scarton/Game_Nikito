@@ -64,14 +64,14 @@ public class Boss extends Entity{
 		}else{
 			//está colidindo com player
 			if(Game.random.nextInt(100) < 5) {
-				//Game.player.Life--;
+				Game.player.Life = Game.player.Life - 20;
 				Game.player.isDamaged = true;
 			}
 		}
-		if(Game.random.nextInt(100) < 0) {
+		if(Game.random.nextInt(100) < 70) {
 			followPath(path);
 		}
-		if(Game.random.nextInt(100) < 0) {
+		if(Game.random.nextInt(100) < 70) {
 			Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
 			Vector2i end = new Vector2i((int)(Game.player.x/16),(int)(Game.player.y/16));
 			path = AStar.findPath(Game.world, start, end);
@@ -116,6 +116,9 @@ public class Boss extends Entity{
 					isDamaged = true;
 					life--;
 					Game.shot.remove(i);
+					Enemy en = new Enemy(e.getX(),e.getY(),16,16,Entity.ENEMY_EN);
+					Game.entities.add(en);
+					Game.enemies.add(en);
 					return;
 				}
 			}

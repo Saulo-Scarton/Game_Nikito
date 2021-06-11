@@ -1,10 +1,9 @@
-() Entrada
+(x) Entrada
 	(x) player andar devagar como se estivesse entrando no lvl
 	(x) camera acompanhar quando trocar de lvl
 	(x) contagem regressiva 3 2 1 go com som
 		() colocar som diferente
 	(x) diminuir opacidade para clarear enquanto o player entra no lvl
-	() player ficar acima do fundo preto
 	
 () criar tela de abertura "startOn"
 
@@ -13,6 +12,8 @@
 	() animação quando escolher
 	
 (x) quando correr levantar poeira
-() quando correr sair som
+	(x) quando correr sair som
+	
 () monstros droparem munição
 () chefe com skill
+() chefe apenas sofrer dano em intervalos limitados

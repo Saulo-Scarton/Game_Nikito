@@ -58,7 +58,10 @@ public class Player extends Entity{
 	
 	public void tick() {
 		if(Game.DEBUG) {
-			Stamina = 100;
+			Stamina = maxStamina;
+			Life = maxLife;
+			speed = 4;
+			Ammo = 100;
 		}
 		
 		depth = 1;
@@ -197,10 +200,10 @@ public class Player extends Entity{
 			if(e instanceof Ammo) { //se Entity for = Ammo
 				if(Entity.isColidding(this, e)) { //player está colidindo com Ammo?
 					Game.entities.remove(i); //remove o objeto atual (Ammo)
-					Ammo+=1000;
-					if(Ammo >= 5000) {
+					Ammo+=15;
+					if(Ammo >= 30) {
 						Game.entities.remove(i); //remove o objeto atual (Ammo)
-						Ammo = 5000;
+						Ammo = 30;
 					return;
 					}
 				}

@@ -100,6 +100,7 @@ public class Entity {
 		return Math.sqrt((x1 - x2)*(x1 -x2)+(y1 - y2)*(y1 - y2));
 	}
 	
+	
 	public boolean isColiding(int xnext,int ynext) { //testando colisões de inimigos
 		Rectangle enemyCurrent = new Rectangle(xnext + maskx,ynext + masky,mwidth,mheight);
 		for(int i = 0; i < Game.enemies.size(); i++) {
@@ -108,12 +109,12 @@ public class Entity {
 				continue;
 			Rectangle targetEnemy = new Rectangle(e.getX() + maskx,e.getY() + masky,mwidth,mheight);
 			if(enemyCurrent.intersects(targetEnemy)) {
-				return true;
+				//return true;
 			}
 		}
-		
 		return false;
 	}
+	
 	
 	public void followPath(List<Node> path) {
 		if(path != null) {

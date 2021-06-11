@@ -74,14 +74,14 @@ public class Enemy extends Entity{
 		}else{
 			//está colidindo com player
 			if(Game.random.nextInt(100) < 5) {
-				//Game.player.Life--;
+				Game.player.Life = Game.player.Life - 5;
 				Game.player.isDamaged = true;
 			}
 		}
-		if(Game.random.nextInt(100) < 0) {
+		if(Game.random.nextInt(100) < 95) {
 			followPath(path);
 		}
-		if(Game.random.nextInt(100) < 0) {
+		if(Game.random.nextInt(100) < 95) {
 			Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
 			Vector2i end = new Vector2i((int)(Game.player.x/16),(int)(Game.player.y/16));
 			path = AStar.findPath(Game.world, start, end);
@@ -96,6 +96,7 @@ public class Enemy extends Entity{
 		}
 		colidingShot();
 		if(life <= 0) {
+			Game.entities.add(new Ammo(16,16,16,16,Entity.AMMO_EN));
 			destroySelf();
 			return;
 		}
@@ -142,7 +143,7 @@ public class Enemy extends Entity{
 			g.drawImage(sprites[index], this.getX() - Camera.x,this.getY() - Camera.y,null);
 		else
 			g.drawImage(Entity.ENEMY_DAMAGED, this.getX() - Camera.x,this.getY() - Camera.y,null);
-			g.fillRect(this.getX() + maskx - Camera.x , this.getY() + masky - Camera.y ,mwidth,mheight); //para ver a posição da mascara
+			//g.fillRect(this.getX() + maskx - Camera.x , this.getY() + masky - Camera.y ,mwidth,mheight); //para ver a posição da mascara
 	}
 	
 }
