@@ -9,6 +9,7 @@ import com.starton.main.Sound;
 import com.starton.world.AStar;
 import com.starton.world.Camera;
 import com.starton.world.Vector2i;
+import com.starton.world.World;
 
 public class Enemy extends Entity{
 	
@@ -18,7 +19,8 @@ public class Enemy extends Entity{
 	
 	private BufferedImage[] sprites;
 	
-	private int life = 10;
+	private int life = 10, ChanceOfWalk = 80;
+	
 	
 	private boolean isDamaged = false;
 	private int damageFrames = 10, damageCurrent = 0;
@@ -32,6 +34,10 @@ public class Enemy extends Entity{
 
 	
 	public void tick() {
+		
+		if(Game.DEBUG) {
+			ChanceOfWalk = 0;
+		}
 		
 		//Algoritimo de perseguição 1
 		/*
@@ -78,10 +84,10 @@ public class Enemy extends Entity{
 				Game.player.isDamaged = true;
 			}
 		}
-		if(Game.random.nextInt(100) < 95) {
+		if(Game.random.nextInt(100) < ChanceOfWalk) {
 			followPath(path);
 		}
-		if(Game.random.nextInt(100) < 95) {
+		if(Game.random.nextInt(100) < ChanceOfWalk) {
 			Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
 			Vector2i end = new Vector2i((int)(Game.player.x/16),(int)(Game.player.y/16));
 			path = AStar.findPath(Game.world, start, end);
@@ -112,6 +118,7 @@ public class Enemy extends Entity{
 	public void destroySelf() {
 		Game.enemies.remove(this);
 		Game.entities.remove(this);
+		World.generateParticles(100,(int)x,(int)y);
 	}
 	
 	public void colidingShot() { //está colidindo com shot
@@ -123,6 +130,13 @@ public class Enemy extends Entity{
 					isDamaged = true;
 					life--;
 					Game.shot.remove(i);
+					System.out.println(e.x);
+					System.out.println(this.x);
+					if(e.getX() < this.getX()) {
+						//x--;
+					}else {
+						//x++;
+					}
 					return;
 				}
 			}

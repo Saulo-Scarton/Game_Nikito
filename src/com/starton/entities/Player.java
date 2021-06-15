@@ -56,7 +56,31 @@ public class Player extends Entity{
 		}
 	}
 	
+	public void revealMap() {
+		int xx = (int)(x/16);
+		int yy = (int)(y/16);
+		
+		World.tiles[xx-1+yy*World.WIDTH].show = true;
+		World.tiles[xx+yy*World.WIDTH].show = true;
+		World.tiles[xx+1+yy*World.WIDTH].show = true;
+		
+		World.tiles[xx+(yy+1)*World.WIDTH].show = true;
+		World.tiles[xx+(yy-1)*World.WIDTH].show = true;
+		
+		World.tiles[xx-1+(yy-1)*World.WIDTH].show = true;
+		World.tiles[xx+1+(yy-1)*World.WIDTH].show = true;
+		
+		World.tiles[xx-1+(yy+1)*World.WIDTH].show = true;
+		World.tiles[xx+1+(yy+1)*World.WIDTH].show = true;
+		
+		
+		
+	}
+	
 	public void tick() {
+		
+		revealMap();
+		
 		if(Game.DEBUG) {
 			Stamina = maxStamina;
 			Life = maxLife;

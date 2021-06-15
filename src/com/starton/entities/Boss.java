@@ -17,7 +17,8 @@ public class Boss extends Entity{
 	
 	private BufferedImage[] sprites;
 	
-	private int life = 10;
+	private int life = 10, ChanceOfWalk = 60;
+	
 	
 	private boolean isDamaged = false;
 	private int damageFrames = 20, damageCurrent = 0;
@@ -33,6 +34,9 @@ public class Boss extends Entity{
 
 	
 	public void tick() {
+		if(Game.DEBUG) {
+			ChanceOfWalk = 0;
+		}
 		//colidindo com player, ajustar getX e getY para "mirar" no meio do player quando perseguir 
 		//tambem ajustar o speed para colisões com as TILES (paredes)
 		/*
@@ -68,10 +72,10 @@ public class Boss extends Entity{
 				Game.player.isDamaged = true;
 			}
 		}
-		if(Game.random.nextInt(100) < 70) {
+		if(Game.random.nextInt(100) < ChanceOfWalk) {
 			followPath(path);
 		}
-		if(Game.random.nextInt(100) < 70) {
+		if(Game.random.nextInt(100) < ChanceOfWalk) {
 			Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
 			Vector2i end = new Vector2i((int)(Game.player.x/16),(int)(Game.player.y/16));
 			path = AStar.findPath(Game.world, start, end);

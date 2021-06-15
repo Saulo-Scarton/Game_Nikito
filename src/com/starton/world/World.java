@@ -13,6 +13,7 @@ import com.starton.entities.Enemy;
 import com.starton.entities.Entity;
 import com.starton.entities.Flower;
 import com.starton.entities.LifePack;
+import com.starton.entities.Particle;
 import com.starton.entities.Player;
 import com.starton.entities.Weapon;
 import com.starton.graphics.Spritesheet;
@@ -81,6 +82,12 @@ public class World {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void generateParticles(int amount, int x, int y) {
+		for(int i = 0; i < amount; i++) {
+			Game.entities.add(new Particle(x,y,1,1,null));
 		}
 	}
 	
