@@ -59,7 +59,9 @@ public class World {
 						Game.enemies.add(en);
 					}else if(pixelNow == 0xFFFF00DC) {
 						//Ammo
-						Game.entities.add(new Ammo(xx*16,yy*16,16,16,Entity.AMMO_EN));
+						//Game.entities.add(new Ammo(xx*16,yy*16,16,16,Entity.AMMO_EN);
+						Ammo ammo = new Ammo(xx*16,yy*16,16,16,Entity.AMMO_EN);
+						Game.entities.add(ammo);
 					}else if(pixelNow == 0xFFFF6A00) {
 						//LifePack
 						LifePack pack = new LifePack(xx*16,yy*16,16,16,Entity.LIFEPACK_EN);

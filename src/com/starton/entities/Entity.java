@@ -25,7 +25,6 @@ public class Entity {
 	public static BufferedImage FLOWER_EN = Game.spritesheet.getSprite(0, 64, 16, 16);
 	public static BufferedImage RUNDIRT_EN = Game.spritesheet.getSprite(16, 16, 3, 3);
 	
-	
 	public double x,y;
 	protected int width,height;
 	

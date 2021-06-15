@@ -29,7 +29,7 @@ public class Player extends Entity{
 	
 	private boolean hasWeapon = false;
 	
-	public int Ammo = 0;
+	public int Ammo = 0, maxAmmo = 100;
 	
 	public boolean isDamaged = false;
 	
@@ -61,7 +61,7 @@ public class Player extends Entity{
 			Stamina = maxStamina;
 			Life = maxLife;
 			speed = 4;
-			Ammo = 100;
+			Ammo = 50;
 		}
 		
 		depth = 1;
@@ -199,12 +199,13 @@ public class Player extends Entity{
 			Entity e = Game.entities.get(i);
 			if(e instanceof Ammo) { //se Entity for = Ammo
 				if(Entity.isColidding(this, e)) { //player está colidindo com Ammo?
-					Game.entities.remove(i); //remove o objeto atual (Ammo)
-					Ammo+=15;
-					if(Ammo >= 30) {
+					if(Ammo != maxAmmo) {
+						Ammo+=15;
 						Game.entities.remove(i); //remove o objeto atual (Ammo)
-						Ammo = 30;
-					return;
+						if(Ammo >= maxAmmo) {
+							Ammo = maxAmmo;
+						}
+						return;
 					}
 				}
 			}
@@ -219,11 +220,10 @@ public class Player extends Entity{
 					if(Life != maxLife) {
 						Life+=100;
 						Game.entities.remove(i); //remove o objeto atual (lifePack)
-					if(Life >= 100) {
-						Life = maxLife;
-					}
-					
-					return;
+						if(Life >= maxLife) {
+							Life = maxLife;
+						}
+						return;
 					}
 				}
 			}

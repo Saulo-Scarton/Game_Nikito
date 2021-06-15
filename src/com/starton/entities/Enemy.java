@@ -96,7 +96,7 @@ public class Enemy extends Entity{
 		}
 		colidingShot();
 		if(life <= 0) {
-			Game.entities.add(new Ammo(16,16,16,16,Entity.AMMO_EN));
+			Game.entities.add(new Ammo(this.getX(),this.getY(),16,16,Entity.AMMO_EN));
 			destroySelf();
 			return;
 		}

@@ -30,6 +30,7 @@ import com.starton.entities.Boss;
 import com.starton.entities.Enemy;
 import com.starton.entities.Entity;
 import com.starton.entities.Flower;
+import com.starton.entities.Npc;
 import com.starton.entities.Player;
 import com.starton.entities.Shot;
 import com.starton.graphics.Spritesheet;
@@ -97,6 +98,8 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public int[] lightmapPixels;
 	public static int[] minimapPixels;
 	
+	public Npc npc;
+	
 	public int mx,my;
 	
 	private static BufferedImage miniMap;
@@ -128,6 +131,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		player = new Player(0,0,16,16,spritesheet.getSprite(32, 0, 16, 16));
 		entities.add(player);
 		world = new World("/level"+CUR_LEVEL+".png"); //World precisa ser carregado depois do spritesheet
+		
+		//NPC
+		npc = new Npc(32,32,16,16,spritesheet.getSprite(80,64,16,16));
+		entities.add(npc);
+		
 		
 		miniMap = new BufferedImage(World.WIDTH,World.HEIGHT, BufferedImage.TYPE_INT_RGB);
 		minimapPixels = ((DataBufferInt)miniMap.getRaster().getDataBuffer()).getData(); //manipular pixel da imagem
@@ -465,6 +473,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			npc.showMessage = false;
+		}
+		
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			player.right = true;
 		}else if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
