@@ -35,7 +35,7 @@ public class Player extends Entity{
 	
 	private int damageFrames = 0; //deve criar para após o player sofrer dano voltar a sprite normal
 	
-	public boolean shoot, mouseShoot = false;
+	public boolean shoot, mouseShoot, sword = false;
 	public int Stamina = 100, maxStamina = 100;  
 	public int Life = 100,maxLife=100; //não pode ser static pois quando reinicia o jogo (GAME OVER) a vida deve voltar a ser 100,
 	public double mx,my; //posição do mouse
@@ -79,6 +79,7 @@ public class Player extends Entity{
 	
 	public void tick() {
 		
+		//para fog of war
 		revealMap();
 		
 		if(Game.DEBUG) {
@@ -148,7 +149,8 @@ public class Player extends Entity{
 				Sound.hurtPlayer.playOnce();
 			}
 		}
-			
+		
+		//shoot
 		if(shoot && hasWeapon && Ammo > 0) { //atirar com tecla "x"
 			Ammo--;
 			shoot = false;
@@ -165,6 +167,24 @@ public class Player extends Entity{
 				
 			Shot shot = new Shot(this.getX() + px, this.getY() + py, 3, 3, null, dx, 0);
 			Game.shot.add(shot);
+		}
+		
+		//sword
+		if(sword) { //sword com tecla "z"
+			sword = false;
+			int dx = 0, px = 0, py = 0;
+			if(dir == right_dir) {//se estiver apontado para direita
+				px = 10;
+				py = 5;
+				dx = 1;
+			}else if(dir == left_dir) {
+				px = 2;
+				py = 5;
+				dx = -1;
+			}
+				
+			Sword sword = new Sword(this.getX() + px, this.getY() + py, 3, 3, null, dx, 0);
+			Game.sword.add(sword);
 		}
 			
 		if(mouseShoot) { //atirar com o mouse
@@ -256,6 +276,10 @@ public class Player extends Entity{
 	
 	//Renderiza o player conforme estado (left, right, up, down, damage, dead, shooting)
 	public void render(Graphics g) {
+		
+		
+		
+		
 		if(!isDamaged) {
 			if(dir == right_dir) {
 				g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);

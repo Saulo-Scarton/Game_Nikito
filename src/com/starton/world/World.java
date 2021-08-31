@@ -135,6 +135,7 @@ public class World {
 		Game.entities.clear(); //limpa entities
 		Game.enemies.clear(); //limpa enemies
 		Game.shot.clear(); //limpa shot
+		Game.sword.clear();
 		Game.entities = new ArrayList<Entity>();
 		Game.enemies = new ArrayList<Enemy>();
 		Game.boss1 = new ArrayList<Boss>();

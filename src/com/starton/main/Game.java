@@ -33,8 +33,10 @@ import com.starton.entities.Flower;
 import com.starton.entities.Npc;
 import com.starton.entities.Player;
 import com.starton.entities.Shot;
+import com.starton.entities.Sword;
 import com.starton.graphics.Spritesheet;
 import com.starton.graphics.UI;
+import com.starton.world.Camera;
 import com.starton.world.World;
 
 public class Game extends Canvas implements Runnable,KeyListener,MouseListener,MouseMotionListener{
@@ -61,6 +63,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static List<Boss> boss1;
 	public static List<Flower> flower;
 	public static List<Shot> shot;
+	public static List<Sword> sword;
 	public static Spritesheet spritesheet;
 	
 	public static World world;
@@ -127,6 +130,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		boss1 = new ArrayList<Boss>();
 		flower = new ArrayList<Flower>();
 		shot = new ArrayList<Shot>();
+		sword = new ArrayList<Sword>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(32, 0, 16, 16));
 		entities.add(player);
@@ -220,6 +224,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 				
 				for(int i = 0; i < shot.size(); i++) {
 					shot.get(i).tick();
+				}
+				for(int i = 0; i < sword.size(); i++) {
+					sword.get(i).tick();
 				}
 			}else if(scene_state == entrance1 ) {
 				if(player.getX() < 30) {
@@ -330,6 +337,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		for(int i = 0; i < shot.size(); i++) {
 			shot.get(i).render(g);
 		}
+		for(int i = 0; i < sword.size(); i++) {
+			sword.get(i).render(g);
+		}
 		
 		//applyLight();
 		ui.render(g);
@@ -434,6 +444,14 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		}else if(scene_state == finish) {
 			g.drawString("NEXT STAGE!",(WIDTH*SCALE)/2 - 300, (HEIGHT*SCALE)/2+ 100);
 		}
+		
+		//EXEMPLO ROTATE
+		//Graphics2D g2 = (Graphics2D) g;
+		//double angleMouse = Math.atan2(200 + 25 - my, 200+25 - mx);
+		//g2.rotate(angleMouse, 200 + 25, 200 + 25);
+		//g.setColor(Color.RED);
+		//g.fillRect(player.getX()- Camera.x, player.getY() - Camera.y, 50, 50);
+		
 		bs.show();
 	}
 
@@ -500,6 +518,10 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			player.shoot = true;
 		}
 		
+		if(e.getKeyCode() == KeyEvent.VK_Z) {
+			player.sword = true;
+		}
+		
 		//ENTER para "CONTINUE"
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			restartGame = true;
@@ -553,6 +575,10 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		//Atirar
 		if(e.getKeyCode() == KeyEvent.VK_X) {
 			player.shoot = false;
+		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_Z) {
+			player.sword = false;
 		}
 		
 		//ENTER para "CONTINUE"
