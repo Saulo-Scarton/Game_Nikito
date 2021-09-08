@@ -100,7 +100,9 @@ public class Enemy extends Entity{
 				index = 0;
 			}
 		}
+		colidingSword();
 		colidingShot();
+		
 		if(life <= 0) {
 			Game.entities.add(new Ammo(this.getX(),this.getY(),16,16,Entity.AMMO_EN));
 			destroySelf();
@@ -130,8 +132,30 @@ public class Enemy extends Entity{
 					isDamaged = true;
 					life--;
 					Game.shot.remove(i);
-					System.out.println(e.x);
-					System.out.println(this.x);
+					//System.out.println(e.x);
+					//System.out.println(this.x);
+					if(e.getX() < this.getX()) {
+						//x--;
+					}else {
+						//x++;
+					}
+					return;
+				}
+			}
+		}
+	}
+	
+	public void colidingSword() { //está colidindo com SWORD
+		for(int i = 0; i < Game.sword.size(); i++) {
+			Entity e = Game.sword.get(i);
+			if(e instanceof Sword) {
+				if(Entity.isColidding(this,e)) {
+					//Sound.hurtEnemy.playOnce();
+					isDamaged = true;
+					//life--;
+					Game.sword.remove(i);
+					//System.out.println(e.x);
+					//System.out.println(this.x);
 					if(e.getX() < this.getX()) {
 						//x--;
 					}else {

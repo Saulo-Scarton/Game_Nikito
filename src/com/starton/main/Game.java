@@ -369,6 +369,26 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		//g.drawString("Teste", 20, 100);
 		
 		
+		//Life Bar
+		g.setColor(Color.black);
+		g.fillRect(7*SCALE,3*SCALE,52*SCALE,10*SCALE);
+		g.setColor(Color.red);
+		g.fillRect(8*SCALE,4*SCALE,50*SCALE,8*SCALE);
+		g.setColor(Color.green);
+		g.fillRect(8*SCALE,4*SCALE,(Game.player.Life/2)*SCALE,8*SCALE);
+		g.setColor(Color.black);
+		g.setFont(new Font("arial",Font.BOLD,8*SCALE));
+		g.drawString(Game.player.Life+"/"+ Game.player.maxLife, ((50-8)/2)*SCALE, 11*SCALE);
+		
+		//Stamina Bar
+		g.setColor(Color.black);
+		g.fillRect(7*SCALE,14*SCALE,52*SCALE,5*SCALE);
+		g.setColor(Color.red);
+		g.fillRect(8*SCALE,15*SCALE,50*SCALE,3*SCALE);
+		g.setColor(Color.yellow);
+		g.fillRect(8*SCALE,15*SCALE,(Game.player.Stamina/2)*SCALE,3*SCALE);
+		g.setColor(Color.black);
+		
 		if(gameState == "GAME_OVER") { //se der game over tela fica escura
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(new Color(0,0,0,100));
@@ -391,16 +411,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			menu.render(g);
 		}
 		
-		/*inserir quadrado que rotaciona "seguindo o cursor"
-		Graphics2D g2 = (Graphics2D) g;
-		double angleMouse = Math.atan2(200+25 - my, 200+25 - mx);
-		g2.rotate(angleMouse, 200+25, 200+25);
-		g.setColor(Color.orange);
-		g.fillRect(200, 200, 50, 50);
-		*/
 		World.renderMiniMap();
 		g.drawImage(miniMap,WIDTH*SCALE-minimapSize-5,HEIGHT*SCALE-minimapSize-5,minimapSize,minimapSize,null);
-		
+
 		//Contagem para começar o estagio
 		if(scene_state == entrance1 && gameState != "MENU" && !DEBUG) {
 		
@@ -450,7 +463,14 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		//double angleMouse = Math.atan2(200 + 25 - my, 200+25 - mx);
 		//g2.rotate(angleMouse, 200 + 25, 200 + 25);
 		//g.setColor(Color.RED);
-		//g.fillRect(player.getX()- Camera.x, player.getY() - Camera.y, 50, 50);
+		//g.fillRect(200, 200, 50, 50);
+		
+		//TESTE COM PLAYER
+		Graphics2D g2 = (Graphics2D) g;
+		double angleMouse = Math.atan2((player.getX() - Camera.x) * SCALE - mx, (player.getY() - Camera.y) * SCALE - my);
+		g2.rotate(-angleMouse, (player.getX() - Camera.x + 8) * SCALE, (player.getY() - Camera.y + 8) * SCALE + 5);
+		g.setColor(Color.RED);
+		g.fillRect((player.getX() - Camera.x + 8) * SCALE, (player.getY() - Camera.y + 8) * SCALE, 100, 10);
 		
 		bs.show();
 	}

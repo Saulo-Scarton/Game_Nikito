@@ -174,16 +174,16 @@ public class Player extends Entity{
 			sword = false;
 			int dx = 0, px = 0, py = 0;
 			if(dir == right_dir) {//se estiver apontado para direita
-				px = 10;
-				py = 5;
+				px = 20;
+				py = 0;
 				dx = 1;
 			}else if(dir == left_dir) {
-				px = 2;
-				py = 5;
+				px = -5;
+				py = 0;
 				dx = -1;
 			}
 				
-			Sword sword = new Sword(this.getX() + px, this.getY() + py, 3, 3, null, dx, 0);
+			Sword sword = new Sword(this.getX() + px, this.getY() + py, 2, 20, null, dx, 0);
 			Game.sword.add(sword);
 		}
 			
@@ -191,7 +191,7 @@ public class Player extends Entity{
 			mouseShoot = false;
 			
 			if(hasWeapon && Ammo > 0) {
-				Sound.playerShot.playOnce();
+				//Sound.playerShot.playOnce();
 				Ammo--;
 				int px = 0,  py = 8;
 				double angle = 0;
@@ -205,9 +205,14 @@ public class Player extends Entity{
 				
 				double dx = Math.cos(angle);
 				double dy = Math.sin(angle);
-			
+				
+				//PARA SHOT
 				Shot shot = new Shot(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy);
 				Game.shot.add(shot);
+				
+				//PARA SWORD
+				//Sword sword = new Sword(this.getX() + px, this.getY() + py, 3, 3, null, dx, dy);
+				//Game.sword.add(sword);
 			}
 		}
 		

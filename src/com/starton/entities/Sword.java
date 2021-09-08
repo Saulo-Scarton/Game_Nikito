@@ -27,7 +27,7 @@ public class Sword extends Entity{
 	}
 	
 	public void tick() {
-		if(World.isFreeDynamic((int)(x+(dx*spd)), (int)(y+(dy*spd)), 3, 3)) {//insere metodo de colisão com parede
+		if(World.isFreeDynamic((int)(x+(dx*spd)), (int)(y+(dy*spd)), 2, 20)) {//insere metodo de colisão com parede
 			x+= dx * spd;
 			y+= dy * spd;
 		}else {
@@ -57,11 +57,12 @@ public class Sword extends Entity{
 	
 	
 	public void render(Graphics g) {
-		//g.setColor(Color.WHITE);
-		//g.fillRect(this.getX() - Camera.x,this.getY() - Camera.y, 2, 20);
+		g.setColor(Color.RED);
+		g.fillRect(this.getX() - Camera.x, this.getY() - Camera.y, 2, 20);
 		//Graphics2D g2 = (Graphics2D) g;
-		//g2.rotate(45,50,50);
-		g.drawImage(sprites, this.getX() - Camera.x,this.getY() - Camera.y,null);
+		//g2.rotate(0,this.getX() - Camera.x, this.getY() - Camera.y);
+		//g.drawImage(sprites, this.getX() - Camera.x ,this.getY() - Camera.y,null);
+		//g.drawImage(sprites, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		
 	}
 }
