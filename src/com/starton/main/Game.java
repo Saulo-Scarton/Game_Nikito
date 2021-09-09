@@ -467,10 +467,10 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		
 		//TESTE COM PLAYER
 		Graphics2D g2 = (Graphics2D) g;
-		double angleMouse = Math.atan2((player.getX() - Camera.x) * SCALE - mx, (player.getY() - Camera.y) * SCALE - my);
-		g2.rotate(-angleMouse, (player.getX() - Camera.x + 8) * SCALE, (player.getY() - Camera.y + 8) * SCALE + 5);
+		double angleMouse = Math.atan2((player.getY() - Camera.y) * SCALE - my + 25, (player.getX() - Camera.x) * SCALE - mx + 25);
+		g2.rotate(angleMouse + 3.14, (player.getX() - Camera.x) * SCALE + 25, (player.getY() - Camera.y) * SCALE + 25);
 		g.setColor(Color.RED);
-		g.fillRect((player.getX() - Camera.x + 8) * SCALE, (player.getY() - Camera.y + 8) * SCALE, 100, 10);
+		g.fillRect((player.getX() - Camera.x) * SCALE, (player.getY() - Camera.y) * SCALE, 500, 50);
 		
 		bs.show();
 	}
