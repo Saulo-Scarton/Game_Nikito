@@ -45,19 +45,33 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static JFrame frame;
 	private Thread thread;
 	private boolean isRunning = true;
+	
+	//TAMANHO TELA E ESCALA
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
 	public static final int SCALE = 4;
 	
+	
+	//VARIAVEIS PARA SWORD & PLAYER
+	public int SwordHeight = 16 * SCALE;
+	public int SwordWidth = 16 * SCALE;
+	
+	//MINIMAPA
 	public static int minimapSize = 25*SCALE;
 	
+	//FPS
 	public static int FPS = 0;
 	
+	//MODO DEBUG
 	public static boolean DEBUG = true;
 	
+	//LEVEIS
 	public static int CUR_LEVEL = 3,MAX_LEVEL = 3; //quantidade de "fases"
+	
+	
 	private BufferedImage image;
 	
+	//DECL LISTA ENTIDADES
 	public static List<Entity> entities;
 	public static List<Enemy> enemies;
 	public static List<Boss> boss1;
@@ -466,11 +480,21 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		//g.fillRect(200, 200, 50, 50);
 		
 		//TESTE COM PLAYER
+		//Graphics2D g2 = (Graphics2D) g;
+		//double angleMouse = Math.atan2((player.getY() - Camera.y) * SCALE - my + 25, (player.getX() - Camera.x) * SCALE - mx + 25);
+		//g2.rotate(angleMouse + 3.14, (player.getX() - Camera.x) * SCALE + 25, (player.getY() - Camera.y) * SCALE + 25);
+		//g.setColor(Color.RED);
+		//g.fillRect((player.getX() - Camera.x) * SCALE, (player.getY() - Camera.y) * SCALE, 200, 50);
+		
+		//TESTE COM PLAYER
+		
+		//DESLOCAMENTOS DA SWORD REF AO PLAYER		
+		
 		Graphics2D g2 = (Graphics2D) g;
-		double angleMouse = Math.atan2((player.getY() - Camera.y) * SCALE - my + 25, (player.getX() - Camera.x) * SCALE - mx + 25);
-		g2.rotate(angleMouse + 3.14, (player.getX() - Camera.x) * SCALE + 25, (player.getY() - Camera.y) * SCALE + 25);
+		double angleMouse = Math.atan2((player.getY() - Camera.y) * SCALE - my + SwordWidth/2, (player.getX() - Camera.x) * SCALE - mx + SwordWidth/2);
+		g2.rotate(angleMouse + 3.14, (player.getX() - Camera.x) * SCALE + SwordWidth/2, (player.getY() - Camera.y) * SCALE + SwordWidth/2);
 		g.setColor(Color.RED);
-		g.fillRect((player.getX() - Camera.x) * SCALE, (player.getY() - Camera.y) * SCALE, 500, 50);
+		g.fillRect((player.getX() - Camera.x) * SCALE, (player.getY() - Camera.y) * SCALE, SwordHeight, SwordWidth);
 		
 		bs.show();
 	}
