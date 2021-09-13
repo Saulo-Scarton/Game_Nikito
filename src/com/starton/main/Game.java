@@ -53,8 +53,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	
 	
 	//VARIAVEIS PARA SWORD & PLAYER
-	public int SwordHeight = 16 * SCALE;
-	public int SwordWidth = 16 * SCALE;
+	public int SwordHeight = 15 * SCALE;
+	public int SwordWidth = 2 * SCALE;
+	public int SwordDesloc = 7;
 	
 	//MINIMAPA
 	public static int minimapSize = 25*SCALE;
@@ -117,7 +118,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	
 	public Npc npc;
 	
-	public int mx,my;
+	public static int mx,my;
 	
 	private static BufferedImage miniMap;
 	
@@ -480,21 +481,14 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		//g.fillRect(200, 200, 50, 50);
 		
 		//TESTE COM PLAYER
-		//Graphics2D g2 = (Graphics2D) g;
-		//double angleMouse = Math.atan2((player.getY() - Camera.y) * SCALE - my + 25, (player.getX() - Camera.x) * SCALE - mx + 25);
-		//g2.rotate(angleMouse + 3.14, (player.getX() - Camera.x) * SCALE + 25, (player.getY() - Camera.y) * SCALE + 25);
-		//g.setColor(Color.RED);
-		//g.fillRect((player.getX() - Camera.x) * SCALE, (player.getY() - Camera.y) * SCALE, 200, 50);
-		
-		//TESTE COM PLAYER
-		
-		//DESLOCAMENTOS DA SWORD REF AO PLAYER		
 		
 		Graphics2D g2 = (Graphics2D) g;
-		double angleMouse = Math.atan2((player.getY() - Camera.y) * SCALE - my + SwordWidth/2, (player.getX() - Camera.x) * SCALE - mx + SwordWidth/2);
-		g2.rotate(angleMouse + 3.14, (player.getX() - Camera.x) * SCALE + SwordWidth/2, (player.getY() - Camera.y) * SCALE + SwordWidth/2);
+		double angleMouse = Math.atan2((player.getY() - Camera.y + SwordDesloc) * SCALE - my + SwordWidth/2, (player.getX() - Camera.x + SwordDesloc) * SCALE - mx + SwordWidth/2);
+		g2.rotate(angleMouse + 3.14, (player.getX() - Camera.x + SwordDesloc) * SCALE + SwordWidth/2, (player.getY() - Camera.y + SwordDesloc) * SCALE + SwordWidth/2);
 		g.setColor(Color.RED);
-		g.fillRect((player.getX() - Camera.x) * SCALE, (player.getY() - Camera.y) * SCALE, SwordHeight, SwordWidth);
+		g.fillRect((player.getX() - Camera.x + SwordDesloc + 10) * SCALE, (player.getY() - Camera.y + SwordDesloc) * SCALE, SwordHeight, SwordWidth);
+		
+		//System.out.println(my + " " + mx);
 		
 		bs.show();
 	}
