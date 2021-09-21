@@ -284,7 +284,7 @@ public class Player extends Entity{
 		
 		
 		
-		g.fillRect(this.getX() + maskx - Camera.x , this.getY() + masky - Camera.y ,mwidth,mheight); //para ver a posição da mascara
+		//g.fillRect(this.getX() + maskx - Camera.x , this.getY() + masky - Camera.y ,mwidth,mheight); //para ver a posição da mascara
 		if(!isDamaged) {
 			if(dir == right_dir) {
 				g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);

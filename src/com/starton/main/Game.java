@@ -47,9 +47,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	private boolean isRunning = true;
 	
 	//TAMANHO TELA E ESCALA
-	public static final int WIDTH = 240;
-	public static final int HEIGHT = 160;
-	public static final int SCALE = 4;
+	public static final int WIDTH = 280;
+	public static final int HEIGHT = 200;
+	public static final int SCALE = 5;
 	
 	
 	//VARIAVEIS PARA SWORD & PLAYER
@@ -64,10 +64,10 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static int FPS = 0;
 	
 	//MODO DEBUG
-	public static boolean DEBUG = true;
+	public static boolean DEBUG = false;
 	
 	//LEVEIS
-	public static int CUR_LEVEL = 3,MAX_LEVEL = 3; //quantidade de "fases"
+	public static int CUR_LEVEL = 1,MAX_LEVEL = 3; //quantidade de "fases"
 	
 	
 	private BufferedImage image;
@@ -482,11 +482,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		
 		//TESTE COM PLAYER
 		
-		Graphics2D g2 = (Graphics2D) g;
-		double angleMouse = Math.atan2((player.getY() - Camera.y + SwordDesloc) * SCALE - my + SwordWidth/2, (player.getX() - Camera.x + SwordDesloc) * SCALE - mx + SwordWidth/2);
-		g2.rotate(angleMouse + 3.14, (player.getX() - Camera.x + SwordDesloc) * SCALE + SwordWidth/2, (player.getY() - Camera.y + SwordDesloc) * SCALE + SwordWidth/2);
-		g.setColor(Color.RED);
-		g.fillRect((player.getX() - Camera.x + SwordDesloc + 10) * SCALE, (player.getY() - Camera.y + SwordDesloc) * SCALE, SwordHeight, SwordWidth);
+		//Graphics2D g2 = (Graphics2D) g;
+		//double angleMouse = Math.atan2((player.getY() - Camera.y + SwordDesloc) * SCALE - my + SwordWidth/2, (player.getX() - Camera.x + SwordDesloc) * SCALE - mx + SwordWidth/2);
+		//g2.rotate(angleMouse + 3.14, (player.getX() - Camera.x + SwordDesloc) * SCALE + SwordWidth/2, (player.getY() - Camera.y + SwordDesloc) * SCALE + SwordWidth/2);
+		//g.setColor(Color.RED);
+		//g.fillRect((player.getX() - Camera.x + SwordDesloc + 10) * SCALE, (player.getY() - Camera.y + SwordDesloc) * SCALE, SwordHeight, SwordWidth);
 		
 		//System.out.println(my + " " + mx);
 		

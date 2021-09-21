@@ -68,12 +68,12 @@ public class Sword extends Entity{
 		
 
 		
-		g.setColor(Color.RED);
-		g.fillRect(this.getX() - Camera.x, this.getY() - Camera.y, 2, 20);
-		Graphics2D g2 = (Graphics2D) g;
-		g2.rotate(0,this.getX() - Camera.x, this.getY() - Camera.y);
-		g.drawImage(sprites, this.getX() - Camera.x ,this.getY() - Camera.y,null);
-		g.drawImage(sprites, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		//g.setColor(Color.RED);
+		//g.fillRect(this.getX() - Camera.x, this.getY() - Camera.y, 2, 20);
+		//Graphics2D g2 = (Graphics2D) g;
+		//g2.rotate(0,this.getX() - Camera.x, this.getY() - Camera.y);
+		//g.drawImage(sprites, this.getX() - Camera.x ,this.getY() - Camera.y,null);
+		//g.drawImage(sprites, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		
 		//EXEMPLO ROTATE
 		//Graphics2D g2 = (Graphics2D) g;
